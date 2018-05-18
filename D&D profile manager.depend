@@ -1,5 +1,14 @@
 # depslib dependency file v1.0
-1526677693 source:c:\##gitclone\d&d profile manager\main.c
+1526681968 source:c:\##gitclone\d&d profile manager\main.c
 	<stdio.h>
 	<stdlib.h>
+	<string.h>
+
+1526682179 source:c:\##gitclone\d&d profile manager\lib.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lib.h"
+
+1526682179 c:\##gitclone\d&d profile manager\lib.h
 
