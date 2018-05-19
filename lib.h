@@ -16,8 +16,23 @@ typedef struct
 
 #endif // LIB_H_INCLUDED
 
-void init(Profile*, int);
-void loadProfiles(Profile*, int);
+/** \brief INITIALIZES AN ARRAY STRUCTURE
+ *
+ * \param Profile[] HERE GOES THE STRUCTURE
+ * \param int HERE GOES THE ARRAY SIZE
+ * \return void
+ *
+ */
+void init(Profile[], int);
+
+/** \brief LOADS PREDEFINED PROFILES FOR A QUICK CODE CHECKING
+ *
+ * \param Profile* HERE GOES THE STRUCTURE
+ * \param
+ * \return void
+ *
+ */
+void loadProfiles(Profile*);
 void brief(Profile*, int);
 void signup(Profile*, int);
 void signdown(Profile*, int);

@@ -26,7 +26,7 @@ int main()
         switch(option)
         {
             case 1:
-
+                signup(character,SIZE);
                 break;
             case 2:
                 /**
@@ -39,7 +39,7 @@ int main()
             case 4:
                 if(flag == 0)
                 {
-                    loadProfiles(character, SIZE);
+                    loadProfiles(character);
                     brief(character, SIZE);
                     flag = 1;
                 }
