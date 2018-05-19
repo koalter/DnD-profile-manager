@@ -16,8 +16,9 @@ int main()
         printf("---D&D PROFILE MANAGER---\n");
         printf("\n1. Create new profile");
         printf("\n2. Delete profile");
-        printf("\n3. Modify profile");
-        printf("\n4. Show all profiles");
+        printf("\n3. Modify profile (change name)");
+        printf("\n4. Show character's profile");
+        printf("\n5. Show all profiles");
         printf("\n9. Exit\n");
 
         printf("\nINPUT AN OPTION: ");
@@ -27,16 +28,27 @@ int main()
         {
             case 1:
                 signup(character,SIZE);
+                flag = 1;
                 break;
             case 2:
-                /**
-                *   Espacio reservado para programar opcion
-                */
+                signdown(character,SIZE);
+                break;
             case 3:
-                /**
-                *   Espacio reservado para programar opcion
-                */
+                modify(character,SIZE);
+                break;
             case 4:
+                if(flag == 0)
+                {
+                    loadProfiles(character);
+                    show(character, SIZE);
+                    flag = 1;
+                }
+                else
+                {
+                    show(character, SIZE);
+                }
+                break;
+            case 5:
                 if(flag == 0)
                 {
                     loadProfiles(character);
