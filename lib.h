@@ -7,10 +7,10 @@ typedef struct
     char name[30];
     int hp;
     int maxHP;
-    char race[30];
+    int race;
     char gender;
-    char classes[30];
-    char align[30];
+    int classes;
+    //char align[30];
     int status;
 }Profile;
 
@@ -25,14 +25,14 @@ typedef struct
  */
 void init(Profile[], int);
 
-/** \brief LOADS PREDEFINED PROFILES FOR A QUICK CODE CHECKING
+/** \brief LOADS A HARDCODED STRUCTURE
  *
  * \param Profile* HERE GOES THE STRUCTURE
  * \param
  * \return void
  *
  */
-void loadProfiles(Profile*);
+void loadHardCode(Profile*);
 
 /** \brief SHOWS A BRIEF LIST OF EVERY LOGGED CHARACTER
  *
@@ -61,5 +61,42 @@ void show(Profile*, int);
  */
 void signup(Profile*, int);
 
+/** \brief TAKES DOWN A CHARACTER'S PROFILE
+ *
+ * \param Profile* STRUCTURE
+ * \param int ARRAZY SIZE
+ * \return void
+ *
+ */
 void signdown(Profile*, int);
+
+
+/** \brief MODIFIES A CHARACTER'S NAME
+ *
+ * \param Profile* STRUCTURE
+ * \param int ARRAY SIZE
+ * \return void
+ *
+ */
 void modify(Profile*, int);
+
+/** \brief EXPORTS THE LOADED STRUCTURE INTO A BINARY FILE
+ *
+ * \param Profile* STRUCTURE
+ * \param int SIZE OF THE STRUCTURE
+ * \return void
+ *
+ */
+void sExport(Profile*, int);
+
+/** \brief IMPORTS A BINARY FILE INTO THE APP
+ *
+ * \param Profile*
+ * \param int
+ * \return void
+ *
+ */
+void sImport(Profile*, int);
+
+int switchRace();
+int switchClass();

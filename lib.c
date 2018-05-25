@@ -3,6 +3,14 @@
 #include <string.h>
 #include "lib.h"
 
+#define WARRIOR 1
+#define WIZARD 2
+#define ROGUE 3
+#define PRIEST 4
+
+#define HUMAN 1
+#define ELF 2
+
 #define OPEN 0
 #define ALIVE 1
 #define DELETED -1
@@ -19,10 +27,10 @@ void init(Profile character[],int length)
             strcpy(character[i].name,"");
             character[i].hp = 0;
             character[i].maxHP = 0;
-            strcpy(character[i].race,"");
+            character[i].race = 0;
             character[i].gender = '\0';
-            strcpy(character[i].classes,"");
-            strcpy(character[i].align,"");
+            character[i].classes = 0;
+            //strcpy(character[i].align,"");
             character[i].status = OPEN;
         }
     }
@@ -33,18 +41,18 @@ void init(Profile character[],int length)
 
 }
 
-void loadProfiles(Profile *character)
+void loadHardCode(Profile *character)
 {
     int i;
 
     int id[4] = {1,2,3,4};
     char name[4][30] = {"Asen Fullbrooke", "Branmir", "Nerifiel", "Dua Pein"};
-    int hp[4] = {8, 4, 4, 7};
-    int maxHP[4] = {9, 10, 6, 7};
-    char race[4][30] = {"Human","Dwarf", "Elf", "Human"};
+    int hp[4] = {8, 6, 4, 7};
+    int maxHP[4] = {9, 7, 6, 7};
+    int race[4] = {HUMAN,ELF,ELF,HUMAN};
     char gender[4] = {'M','M','F','F'};
-    char classes[4][30] = {"Knight","Warrior","Wizard","Rogue"};
-    char align[4][30] = {"Lawful Good","Chaotic Neutral","Lawful Neutral","Neutral Evil"};
+    int classes[4] = {WARRIOR,WIZARD,PRIEST,ROGUE};
+    //char align[4][30] = {"Lawful Good","Chaotic Neutral","Lawful Neutral","Neutral Evil"};
 
     if (character != NULL)
     {
@@ -54,10 +62,10 @@ void loadProfiles(Profile *character)
             strcpy((character+i)->name,name[i]);
             (character+i)->hp = hp[i];
             (character+i)->maxHP = maxHP[i];
-            strcpy((character+i)->race,race[i]);
+            (character+i)->race = race[i];
             (character+i)->gender = gender[i];
-            strcpy((character+i)->classes,classes[i]);
-            strcpy((character+i)->align,align[i]);
+            (character+i)->classes = classes[i];
+            //strcpy((character+i)->align,align[i]);
             (character+i)->status = ALIVE;
         }
 
@@ -80,14 +88,37 @@ void brief(Profile *character,int length)
         {
             if((character+i)->status != OPEN && (character+i)->status != DELETED)
             {
-                printf("%2d|%20s|%3d/%2d|%10s|%10s\n",
+                printf("%2d|%20s|%3d/%2d",
                        (character+i)->id,
                        (character+i)->name,
                        (character+i)->hp,
-                       (character+i)->maxHP,
-                       (character+i)->race,
-                       (character+i)->classes);
-            }
+                       (character+i)->maxHP);
+                switch((character+i)->race)
+                {
+                    case HUMAN:
+                        printf("|%10s","Human");
+                        break;
+                    case ELF:
+                        printf("|%10s","Elf");
+                        break;
+                }
+                switch((character+i)->classes)
+                {
+                    case WARRIOR:
+                        printf("|%10s\n","Warrior");
+                        break;
+                    case WIZARD:
+                        printf("|%10s\n","Wizard");
+                        break;
+                    case ROGUE:
+                        printf("|%10s\n","Rogue");
+                        break;
+                    case PRIEST:
+                        printf("|%10s\n","Priest");
+                        break;
+                }
+
+            } //if((character+i)->status != OPEN && (character+i)->status != DELETED)
         }
     }
     else
@@ -123,8 +154,32 @@ void show(Profile *character,int length)
         printf("\n%s\n",(character+index)->name);
         printf("\nHit Points: %d/%d",(character+index)->hp,(character+index)->maxHP);
         printf("\nGender: %c",(character+index)->gender);
-        printf("\nRace: \t%s",(character+index)->race);
-        printf("\nClass: \t%s\n",(character+index)->classes);
+        printf("\nRace: \t");
+        switch((character+index)->race)
+                {
+                    case HUMAN:
+                        printf("Human");
+                        break;
+                    case ELF:
+                        printf("Elf");
+                        break;
+                }
+        printf("\nClass: \t");
+        switch((character+index)->classes)
+                {
+                    case WARRIOR:
+                        printf("Warrior\n");
+                        break;
+                    case WIZARD:
+                        printf("Wizard\n");
+                        break;
+                    case ROGUE:
+                        printf("Rogue\n");
+                        break;
+                    case PRIEST:
+                        printf("Priest\n");
+                        break;
+                }
         /// END DISPLAY
     }
     else
@@ -144,9 +199,9 @@ void signup(Profile *character,int length)
     char name[50];
     int hp;
     int maxHP;
-    char race[30];
+    int race;
     char gender;
-    char classes[30];
+    int classes;
 
     if (character != NULL && length > 0)
     {
@@ -158,7 +213,6 @@ void signup(Profile *character,int length)
                 break;
             }
         }
-        //printf("%d\n", index); //index number
 
         /// BEGIN CHARACTER INFO
         id = index + 1;
@@ -181,13 +235,29 @@ void signup(Profile *character,int length)
             }
         }
 
-        printf("\nEnter character's race: ");
-        fflush(stdin);
-        gets(race);
+        printf("\nInput character's race: \n");
+        race = switchRace();
+        for(flag=0;race < 1 || race > 2;flag++)
+        {
+            printf("\nERROR:Input character's race: ");
+            race = switchRace();
+            if (flag == 2)
+            {
+                return;
+            }
+        }
 
-        printf("\nEnter character's class: ");
-        fflush(stdin);
-        gets(classes);
+        printf("\nInput character's class: \n");
+        classes = switchClass();
+        for(flag=0;classes < 1 || classes > 4;flag++)
+        {
+            printf("\nERROR:Input character's class: ");
+            classes = switchClass();
+            if (flag == 2)
+            {
+                return;
+            }
+        }
 
         printf("\nEnter character's hit points: ");
         scanf("%d",&maxHP);
@@ -196,7 +266,31 @@ void signup(Profile *character,int length)
 
         /// CONFIRMATION
         printf("\n\n%2s|%20s|%6s|%10s|%10s\n\n","ID","NAME","HEALTH","RACE","CLASS");
-        printf("%2d|%20s|%3d/%2d|%10s|%10s\n",id,name,hp,maxHP,race,classes);
+        printf("%2d|%20s|%3d/%2d",id,name,hp,maxHP);
+        switch(race)
+        {
+            case HUMAN:
+                printf("|%10s","Human");
+                break;
+            case ELF:
+                printf("|%10s","Elf");
+                break;
+        }
+        switch(classes)
+        {
+            case WARRIOR:
+                printf("|%10s\n","Warrior");
+                break;
+            case WIZARD:
+                printf("|%10s\n","Wizard");
+                break;
+            case ROGUE:
+                printf("|%10s\n","Rogue");
+                break;
+            case PRIEST:
+                printf("|%10s\n","Priest");
+                break;
+        }
         printf("\nIS THIS INFORMATION CORRECT? [Y/N]: ");
         fflush(stdin);
         scanf("%c", &answer);
@@ -206,9 +300,9 @@ void signup(Profile *character,int length)
             strcpy((character+index)->name,name);
             (character+index)->hp = hp;
             (character+index)->maxHP = maxHP;
-            strcpy((character+index)->race,race);
+            (character+index)->race = race;
             (character+index)->gender = gender;
-            strcpy((character+index)->classes,classes);
+            (character+index)->classes = classes;
             (character+index)->status = ALIVE;
         }
     } //if (character != NULL && length > 0)
@@ -242,13 +336,37 @@ void signdown(Profile *character,int length)
         /// DISPLAY INFO
         printf("\n%s\n",(character+index)->name);
         printf("\nCurrent Hit Points: %d/%d",(character+index)->hp,(character+index)->maxHP);
-        printf("\nGender: \t%c",(character+index)->gender);
-        printf("\nRace: \t%s",(character+index)->race);
-        printf("\nClass: \t%s",(character+index)->classes);
+        printf("\nGender: %c",(character+index)->gender);
+        printf("\nRace: \t");
+        switch((character+index)->race)
+                {
+                    case HUMAN:
+                        printf("Human");
+                        break;
+                    case ELF:
+                        printf("Elf");
+                        break;
+                }
+        printf("\nClass: \t");
+        switch((character+index)->classes)
+                {
+                    case WARRIOR:
+                        printf("Warrior\n");
+                        break;
+                    case WIZARD:
+                        printf("Wizard\n");
+                        break;
+                    case ROGUE:
+                        printf("Rogue\n");
+                        break;
+                    case PRIEST:
+                        printf("Priest\n");
+                        break;
+                }
         /// END DISPLAY
 
         /// CONFIRMATION
-        printf("\nWARNING: THIS PROCESS CANNOT BE UNDONE. PRESS 'Y' TO CONTINUE AND DELETE THIS CHARACTER: ");
+        printf("\nWARNING: THIS PROCESS CANNOT BE UNDONE.\nPRESS 'Y' TO CONTINUE AND DELETE THIS CHARACTER: ");
         fflush(stdin);
         scanf("%c", &answer);
         if (answer == 'y' || answer == 'Y')
@@ -261,8 +379,9 @@ void signdown(Profile *character,int length)
             strcpy((character+index)->race,"");
             (character+index)->gender = "";
             strcpy((character+index)->classes,"");
-            */
-            (character+index)->status = DELETED;
+            */ /// RESERVED FOR EXTENDED OPTIONS
+            (character+index)->status = OPEN;//DELETED;
+            printf("CHARACTER DELETED!\n");
         }
     }
     else
@@ -299,9 +418,33 @@ void modify(Profile *character,int length)
         /// DISPLAY INFO
         printf("\n%s\n",(character+index)->name);
         printf("\nCurrent Hit Points: %d/%d",(character+index)->hp,(character+index)->maxHP);
-        printf("\nGender: \t%c",(character+index)->gender);
-        printf("\nRace: \t%s",(character+index)->race);
-        printf("\nClass: \t%s",(character+index)->classes);
+        printf("\nGender: %c",(character+index)->gender);
+        printf("\nRace: \t");
+        switch((character+index)->race)
+                {
+                    case HUMAN:
+                        printf("Human");
+                        break;
+                    case ELF:
+                        printf("Elf");
+                        break;
+                }
+        printf("\nClass: \t");
+        switch((character+index)->classes)
+                {
+                    case WARRIOR:
+                        printf("Warrior\n");
+                        break;
+                    case WIZARD:
+                        printf("Wizard\n");
+                        break;
+                    case ROGUE:
+                        printf("Rogue\n");
+                        break;
+                    case PRIEST:
+                        printf("Priest\n");
+                        break;
+                }
         /// END DISPLAY
 
         /// CONFIRMATION
@@ -321,4 +464,61 @@ void modify(Profile *character,int length)
     {
         printf("\nERROR: PROFILES COULD NOT BE LOADED\n");
     }
+}
+
+void sExport(Profile *character, int size)
+{
+    FILE *fchar;
+
+    fchar = fopen("Profiles.dat","wb");
+    if(fchar != NULL)
+    {
+        fwrite(character,sizeof(Profile),size,fchar);
+        fclose(fchar);
+
+        brief(character,size);
+    }
+    else
+    {
+        printf("\nUNABLE TO LOAD FILE!\n");
+    }
+
+}
+
+void sImport(Profile *character, int size)
+{
+    FILE *fchar;
+
+    fchar = fopen("Profiles.dat","rb");
+    if(fchar != NULL)
+    {
+        fread(character,sizeof(Profile),size,fchar);
+        fclose(fchar);
+
+        brief(character,size);
+    }
+    else
+    {
+        printf("\nUNABLE TO LOAD FILE!\n");
+    }
+}
+
+int switchRace()
+{
+    int aux;
+    printf("1. Human\n");
+    printf("2. Elf\n\n");
+    scanf("%d",&aux);
+    return aux;
+}
+
+int switchClass()
+{
+    int aux;
+    printf("1. Warrior\n");
+    printf("2. Wizard\n");
+    printf("3. Rogue\n");
+    printf("4. Priest\n\n");
+    scanf("%d",&aux);
+    return aux;
 }

@@ -7,7 +7,6 @@
 int main()
 {
     int option;
-    int flag = 0;
     Profile character[SIZE];
 
     init(character,SIZE);
@@ -19,6 +18,9 @@ int main()
         printf("\n3. Modify profile (change name)");
         printf("\n4. Show character's profile");
         printf("\n5. Show all profiles");
+        printf("\n6. Export profiles");
+        printf("\n7. Import profiles");
+        printf("\n8. RESET TO DEFAULT VALUES");
         printf("\n9. Exit\n");
 
         printf("\nINPUT AN OPTION: ");
@@ -28,7 +30,6 @@ int main()
         {
             case 1:
                 signup(character,SIZE);
-                flag = 1;
                 break;
             case 2:
                 signdown(character,SIZE);
@@ -37,28 +38,20 @@ int main()
                 modify(character,SIZE);
                 break;
             case 4:
-                if(flag == 0)
-                {
-                    loadProfiles(character);
-                    show(character, SIZE);
-                    flag = 1;
-                }
-                else
-                {
-                    show(character, SIZE);
-                }
+                show(character, SIZE);
                 break;
             case 5:
-                if(flag == 0)
-                {
-                    loadProfiles(character);
-                    brief(character, SIZE);
-                    flag = 1;
-                }
-                else
-                {
-                    brief(character, SIZE);
-                }
+                brief(character, SIZE);
+                break;
+            case 6:
+                sExport(character, SIZE);
+                break;
+            case 7:
+                sImport(character, SIZE);
+                break;
+            case 8:
+                init(character,SIZE);
+                loadHardCode(character);
                 break;
             default:
                 option = 9;
