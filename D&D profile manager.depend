@@ -12,3 +12,27 @@
 
 1527281800 c:\##gitclone\d&d profile manager\lib.h
 
+1529796890 source:c:\##gitclone\dnd-profile-manager\lib.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"lib.h"
+	"ArrayList.h"
+
+1529796890 c:\##gitclone\dnd-profile-manager\lib.h
+	"ArrayList.h"
+
+1529790973 source:c:\##gitclone\dnd-profile-manager\main.c
+	<stdio.h>
+	<stdlib.h>
+	"lib.h"
+	"ArrayList.h"
+
+1529769885 source:c:\##gitclone\dnd-profile-manager\arraylist.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ArrayList.h"
+
+1529790973 c:\##gitclone\dnd-profile-manager\arraylist.h
+
