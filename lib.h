@@ -20,6 +20,7 @@ typedef struct
 
 Profile* init();
 int load_character(ArrayList* pList);
+int del_character(ArrayList* pList);
 int loadHardCode(ArrayList* pList);
 int show(Profile*);
 int showAll(ArrayList* pList);

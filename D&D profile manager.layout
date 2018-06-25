@@ -1,42 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
-	<ActiveTarget name="Debug" />
+	<ActiveTarget name="Release" />
+	<File name="lib.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="256" topLine="15" />
+		</Cursor>
+	</File>
+	<File name="ArrayList.c" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6377" topLine="230" />
+		</Cursor>
+	</File>
 	<File name="ArrayList.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="0" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="lib.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="7253" topLine="27" />
-		</Cursor>
-		<Folding>
-			<Collapse line="28" />
-			<Collapse line="64" />
-			<Collapse line="114" />
-			<Collapse line="175" />
-			<Collapse line="281" />
-			<Collapse line="363" />
-			<Collapse line="438" />
-			<Collapse line="457" />
-			<Collapse line="475" />
-			<Collapse line="484" />
-		</Folding>
-	</File>
-	<File name="ArrayList.c" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="72" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="lib.h" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="50" topLine="0" />
-		</Cursor>
-	</File>
 	<File name="main.c" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="457" topLine="33" />
+			<Cursor1 position="613" topLine="0" />
 		</Cursor>
+	</File>
+	<File name="lib.c" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="3097" topLine="112" />
+		</Cursor>
+		<Folding>
+			<Collapse line="10" />
+			<Collapse line="178" />
+			<Collapse line="190" />
+		</Folding>
 	</File>
 </CodeBlocks_layout_file>

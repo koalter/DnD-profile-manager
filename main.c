@@ -3,8 +3,6 @@
 #include "lib.h"
 #include "ArrayList.h"
 
-#define SIZE 10
-
 int main()
 {
     char option;
@@ -17,25 +15,38 @@ int main()
     {
         printf("\t\t\t~~~D&D PROFILE MANAGER~~~\n");
         printf("\n1. Create new profile");
-        //printf("\n2. Delete profile");
-        //printf("\n3. Modify profile (change name)");
-        printf("\n4. Show all profiles");
-        //printf("\n6. Export profiles");
-        //printf("\n7. Import profiles");
-        printf("\n7. LOAD DEFAULT VALUES");
+        printf("\n2. Delete profile");
+        printf("\n3. Show all profiles");
+        //printf("\n4. Export profiles");
+        //printf("\n5. Import profiles");
+        printf("\n6. LOAD DEFAULT VALUES");
         printf("\n9. Exit\n");
 
-        printf("\nINPUT AN OPTION: ");
-        fflush(stdin);
-        option = getchar();
-        //scanf("%d", &option);
+        option = getChar("INPUT AN OPTION: ");
 
         switch(option)
         {
             case '1':
-                load_character(pList);
+                if(load_character(pList) == 0)
+                {
+                    printf("Character successfully added!!\n");
+                }
+                else
+                {
+                    printf("Process could not be completed!!\n");
+                }
                 break;
-            case '4':
+            case '2':
+                if(del_character(pList) == 0)
+                {
+                    printf("Character successfully deleted!!\n");
+                }
+                else
+                {
+                    printf("Process could not be completed!!\n");
+                }
+                break;
+            case '3':
                 printf("\n\n%2s|%20s|%6s|%10s|%10s\n\n","ID","NAME","HEALTH","RACE","CLASS");
                 showAll(pList);
                 break;

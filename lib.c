@@ -92,8 +92,6 @@ int load_character(ArrayList* pList)
         {
             character->status = ALIVE;
             al_add(pList,character);
-            printf("Character succesfully added!!\n");
-
             returnAux = 0;
         }
         else
@@ -101,6 +99,40 @@ int load_character(ArrayList* pList)
             free(character);
         }
     } //if (character != NULL)
+
+    return returnAux;
+}
+
+int del_character(ArrayList* pList)
+{
+    int returnAux = -1;
+    int i;
+    int len;
+    Profile* character;
+    char option;
+
+    if(pList != NULL)
+    {
+        showAll(pList);
+        len = pList->len(pList);
+
+        if(len > 0)
+        {
+            i = getInt("\nEnter character's ID: ") - 1;
+
+            character = pList->get(pList,i);
+
+            show(character);
+
+            option = getChar("\nWARNING! THIS PROCESS CANNOT BE UNDONE!! PRESS Y TO CONFIRM: ");
+            if(option == 'y' || option == 'Y')
+            {
+                pList->remove(character,i+1);
+
+                returnAux = 0;
+            }
+        }
+    }
 
     return returnAux;
 }
@@ -164,12 +196,17 @@ int showAll(ArrayList* pList)
     if(pList != NULL)
     {
         length = pList->len(pList);
-        for(i=0;i < length;i++)
+        if(length > 0)
         {
-            character = pList->get(pList,i);
-            show(character);
+            printf("\n\n%2s|%20s|%6s|%10s|%10s\n\n","ID","NAME","HEALTH","RACE","CLASS");
+            for(i=0;i < length;i++)
+            {
+                character = pList->get(pList,i);
+                show(character);
+            }
+            returnAux = 0;
         }
-        returnAux = 0;
+
     }
     return returnAux;
 }
