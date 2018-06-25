@@ -6,12 +6,12 @@
 typedef struct
 {
     int id;
-    char* name;
+    char name[50];
     int hp;
     int maxHP;
-    char* race;
+    char race[20];
     char gender;
-    char* class;
+    char class[20];
     //char align[30];
     int status;
 }Profile;
@@ -22,14 +22,15 @@ Profile* init();
 int load_character(ArrayList* pList);
 int loadHardCode(ArrayList* pList);
 int show(Profile*);
+int showAll(ArrayList* pList);
 
 ///setters
 int setId(Profile*, int id);
-int setName(Profile*, char* name);
+int setName(Profile*, char name[]);
 int setHP(Profile*, int hp);
-int setRace(Profile*, char* race);
+int setRace(Profile*, char race[]);
 int setGender(Profile*, char gender);
-int setClass(Profile*, char* class);
+int setClass(Profile*, char class[]);
 
 ///getters
 int getId(Profile*);
@@ -42,4 +43,4 @@ char* getClass(Profile*);
 ///input functions
 int getInt(char *mensaje);
 char getChar(char* mensaje);
-char* getString(char* mensaje, char* retorno);
+int getString(char* mensaje, char retorno[]);

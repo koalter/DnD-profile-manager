@@ -7,7 +7,8 @@
 
 int main()
 {
-    int option;
+    char option;
+    //int i;
 
     ArrayList* pList = al_newArrayList();
     //Profile* character;
@@ -16,24 +17,29 @@ int main()
     {
         printf("\t\t\t~~~D&D PROFILE MANAGER~~~\n");
         printf("\n1. Create new profile");
-        printf("\n2. Delete profile");
-        printf("\n3. Modify profile (change name)");
-        printf("\n4. Show character's profile");
-        printf("\n5. Show all profiles");
-        printf("\n6. Export profiles");
-        printf("\n7. Import profiles");
-        printf("\n8. LOAD DEFAULT VALUES");
+        //printf("\n2. Delete profile");
+        //printf("\n3. Modify profile (change name)");
+        printf("\n4. Show all profiles");
+        //printf("\n6. Export profiles");
+        //printf("\n7. Import profiles");
+        printf("\n7. LOAD DEFAULT VALUES");
         printf("\n9. Exit\n");
 
         printf("\nINPUT AN OPTION: ");
-        scanf("%d", &option);
+        fflush(stdin);
+        option = getchar();
+        //scanf("%d", &option);
 
         switch(option)
         {
-            case 1:
+            case '1':
                 load_character(pList);
                 break;
-            case 8:
+            case '4':
+                printf("\n\n%2s|%20s|%6s|%10s|%10s\n\n","ID","NAME","HEALTH","RACE","CLASS");
+                showAll(pList);
+                break;
+            case '7':
                 if(loadHardCode(pList) == 0)
                 {
                     printf("\nPROFILES LOADED\n");
@@ -44,13 +50,12 @@ int main()
                 }
                 break;
             default:
-                option = 9;
                 break;
         }
 
         system("pause");
         system("cls");
-    }while(option != 9);
+    }while(option != '9');
 
     return 0;
 }

@@ -9,7 +9,7 @@
 
 Profile* new_character()
 {
-    void* character;
+    Profile* character;
 
     character = (Profile*) malloc(sizeof(Profile));
 
@@ -19,6 +19,7 @@ Profile* new_character()
 int load_character(ArrayList* pList)
 {
     int returnAux = -1;
+    int aux;
     char answer;
     Profile* character;
 
@@ -36,9 +37,11 @@ int load_character(ArrayList* pList)
         id = pList->len(pList) + 1;
         setId(character,id);
 
-        getString("Enter character's name: ",name);
-        if(name == NULL)
+        aux = getString("Enter character's name: ",name);
+        if(aux != 0)
         {
+            printf("Invalid name!!\n");
+            free(character);
             return returnAux;
         }
         setName(character, name);
@@ -46,25 +49,37 @@ int load_character(ArrayList* pList)
         gender = getChar("Enter character's gender [m/f]: ");
         if(gender != 'm' && gender != 'f' && gender != 'M' && gender != 'F')
         {
+            printf("Invalid gender!!\n");
+            free(character);
             return returnAux;
         }
         setGender(character, gender);
 
-        getString("Input character's race: ",race);
-        if(race == NULL)
+        aux = getString("Input character's race: ",race);
+        if(aux != 0)
         {
+            printf("Invalid race!!\n");
+            free(character);
             return returnAux;
         }
         setRace(character, race);
 
-        getString("Input character's class: ", class);
-        if(class == NULL)
+        aux = getString("Input character's class: ", class);
+        if(aux != 0)
         {
+            printf("Invalid class!!\n");
+            free(character);
             return returnAux;
         }
         setClass(character, class);
 
         hp = getInt("Enter character's hit points: ");
+        if(hp == 0)
+        {
+            printf("Invalid HP value!!\n");
+            free(character);
+            return returnAux;
+        }
         setHP(character, hp);
         /// END CHARACTER INFO
 
@@ -76,7 +91,8 @@ int load_character(ArrayList* pList)
         if (answer == 'y' || answer == 'Y')
         {
             character->status = ALIVE;
-            pList->add(pList,character);
+            al_add(pList,character);
+            printf("Character succesfully added!!\n");
 
             returnAux = 0;
         }
@@ -105,10 +121,11 @@ int loadHardCode(ArrayList* pList)
 
     if(pList != NULL)
     {
+        pList->clear(pList);
+
         for(i=0;i < 4;i++)
         {
             character = new_character();
-
             setId(character,id[i]);
             setName(character,name[i]);
             setHP(character,maxHP[i]);
@@ -131,8 +148,27 @@ int show(Profile* this)
     int returnAux = -1;
     if(this != NULL)
     {
-        printf("%2d|%20s|%3d/%2d|%10s|%10s",this->id,this->name,this->hp,this->maxHP,this->race,this->class);
+        printf("%2d|%20s|%3d/%2d|%10s|%10s\n",this->id,this->name,this->hp,this->maxHP,this->race,this->class);
 
+        returnAux = 0;
+    }
+    return returnAux;
+}
+
+int showAll(ArrayList* pList)
+{
+    int returnAux = -1;
+    int length;
+    int i;
+    Profile* character;
+    if(pList != NULL)
+    {
+        length = pList->len(pList);
+        for(i=0;i < length;i++)
+        {
+            character = pList->get(pList,i);
+            show(character);
+        }
         returnAux = 0;
     }
     return returnAux;
@@ -153,14 +189,14 @@ int setId(Profile* character, int id)
     return returnAux;
 }
 
-int setName(Profile* character, char* name)
+int setName(Profile* character, char name[])
 {
     int returnAux = -1;
 
     if(character != NULL)
     {
         strcpy(character->name, name);
-
+        //character->name = name;
         returnAux = 0;
     }
 
@@ -182,14 +218,14 @@ int setHP(Profile* character, int hp)
     return returnAux;
 }
 
-int setRace(Profile* character, char* race)
+int setRace(Profile* character, char race[])
 {
     int returnAux = -1;
 
     if(character != NULL)
     {
         strcpy(character->race, race);
-
+        //character->race = race;
         returnAux = 0;
     }
 
@@ -210,13 +246,14 @@ int setGender(Profile* character, char gender)
     return returnAux;
 }
 
-int setClass(Profile* character, char* class)
+int setClass(Profile* character, char class[])
 {
     int returnAux = -1;
 
     if(character != NULL)
     {
         strcpy(character->class, class);
+        //character->class = class;
 
         returnAux = 0;
     }
@@ -228,7 +265,7 @@ int setClass(Profile* character, char* class)
 ///getters
 int getId(Profile* this)
 {
-    int id;
+    int id = NULL;
 
     if(this != NULL)
     {
@@ -240,7 +277,7 @@ int getId(Profile* this)
 
 char* getName(Profile* this)
 {
-    char* name;
+    char* name = NULL;
 
     if(this != NULL)
     {
@@ -252,7 +289,7 @@ char* getName(Profile* this)
 
 int getHP(Profile* this)
 {
-    int maxHP;
+    int maxHP = NULL;
 
     if(this != NULL)
     {
@@ -264,7 +301,7 @@ int getHP(Profile* this)
 
 char* getRace(Profile* this)
 {
-    char* race;
+    char* race = NULL;
 
     if(this != NULL)
     {
@@ -276,7 +313,7 @@ char* getRace(Profile* this)
 
 char getGender(Profile* this)
 {
-    char gender;
+    char gender = NULL;
 
     if(this != NULL)
     {
@@ -288,7 +325,7 @@ char getGender(Profile* this)
 
 char* getClass(Profile* this)
 {
-    char* class;
+    char* class = NULL;
 
     if(this != NULL)
     {
@@ -322,19 +359,21 @@ char getChar(char* mensaje)
     return retorno;
 }
 
-char* getString(char* mensaje, char retorno[])
+int getString(char* mensaje, char this[])
 {
+    int returnAux = 0;
     int i;
+
     printf(mensaje);
     fflush(stdin);
-    gets(retorno);
-    for(i=0;retorno[i] != '\0';i++)
+    gets(this);
+    for(i=0;this[i] != '\0';i++)
     {
-        if(retorno[i] >= '0' && retorno[i] <= '9')
+        if(this[i] >= '0' && this[i] <= '9')
         {
-            retorno = NULL;
+            returnAux = -1;
             break;
         }
     }
-    return retorno;
+    return returnAux;
 }
